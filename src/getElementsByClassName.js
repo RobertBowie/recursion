@@ -10,10 +10,11 @@ var getElementsByClassName = function(className){
 //-----------------------------------------------------------
   var result = [];
   var node = node || document.body;
+  var classCheck = function(targetNode) { return (targetNode.classList && targetNode.classList.contains(className)) }
 //-----------------------------------------------------------
 // Initial check for target class.
 //-----------------------------------------------------------
-  if (node.classList && node.classList.contains(className)) {
+  if (classCheck(node)) {
     result.push(node);
   }
 //-----------------------------------------------------------
@@ -21,7 +22,10 @@ var getElementsByClassName = function(className){
 //-----------------------------------------------------------
   var children = node.children ? node.children : null;
   if (children) {
-    //
+    childrenCopy = [].slice.call(children);
+    childrenCopy.forEach(function(child) {
+      if (classCheck(child)) {  }
+     });
   }
 //-----------------------------------------------------------
 // 
