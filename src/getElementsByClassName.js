@@ -9,7 +9,7 @@ var getElementsByClassName = function(className){
 // Setting up shop.
 //-----------------------------------------------------------
   var result = [];
-  var node = node || document.body;
+  var node = arguments[1] || document.body;
   var classCheck = function(targetNode) { return (targetNode.classList && targetNode.classList.contains(className)) }
 //-----------------------------------------------------------
 // Initial check for target class.
@@ -18,22 +18,15 @@ var getElementsByClassName = function(className){
     result.push(node);
   }
 //-----------------------------------------------------------
-// Check for children and move to Phase II
+// Check for children and pass them into func if they exist.
 //-----------------------------------------------------------
   var children = node.children ? node.children : null;
   if (children) {
     childrenCopy = [].slice.call(children);
     childrenCopy.forEach(function(child) {
-      if (classCheck(child)) {  }
+      node = child;
+      result = result.concat(getElementsByClassName(className, node));
      });
   }
-//-----------------------------------------------------------
-// 
-//-----------------------------------------------------------
-
-
-//-----------------------------------------------------------
-// 
-//-----------------------------------------------------------
   return result;
 };
