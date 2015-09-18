@@ -10,13 +10,16 @@ var getElementsByClassName = function(className){
 //-----------------------------------------------------------
   var result = [];
   var node = arguments[1] || document.body;
-  var classCheck = function(targetNode) { return (targetNode.classList && targetNode.classList.contains(className)) }
+  var classCheck = function(targetNode) {
+    if (targetNode.classList &&
+        targetNode.classList.contains(className)) {
+      result.push(targetNode);
+    }
+  };
 //-----------------------------------------------------------
 // Initial check for target class.
 //-----------------------------------------------------------
-  if (classCheck(node)) {
-    result.push(node);
-  }
+  classCheck(node);
 //-----------------------------------------------------------
 // Check for children and pass them into func if they exist.
 //-----------------------------------------------------------
