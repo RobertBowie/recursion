@@ -4,20 +4,11 @@
 // but you don't so you're going to write it from scratch:
 
 //--------------------------------------------------------
-// Building (hopefully) useful helpers:
-//--------------------------------------------------------
-function obEach(obj, cb) {
-  for (var key in obj) {
-    cb(obj[key], key, obj);
-  }
-};
-//--------------------------------------------------------
 // stringifyJSON:
 //  JSON.stringify() converts a value to JSON notation representing it:
 //  Properties of non-array objects are not guaranteed to be stringified in any particular order.
 //  Boolean, Number, and String objects are converted to the corresponding primitive values.
-//  If undefined, a function, or a symbol is encountered during conversion it is omitted.
-//  All symbol-keyed or non-enumerable properties will be completely ignored.
+//  If undefined or a function is encountered during conversion it is omitted.
 //--------------------------------------------------------
 var stringifyJSON = function(obj) {
 //--------------------------------------------------------
@@ -34,12 +25,6 @@ var stringifyJSON = function(obj) {
   if (typeof(obj) === "boolean") {
     return obj.toString();
   }
-  // if () {
-  //   return;
-  // }
-  // if () {
-  //   return;
-  // }
   if (typeof(obj) === "string") {
     return '"' + obj + '"';
   }
@@ -51,8 +36,11 @@ var stringifyJSON = function(obj) {
   if (obj === undefined || typeof(obj) === "function") {
     return null;
   }
-    if (Array.isArray(obj)) {
-    //Handle an array here;
+  if (Array.isArray(obj)) {
+    if (obj.length < 1) { return '[]' };
+    return '[' + obj.map(function(value) {
+      return stringifyJSON(value);
+    }).join(',') + ']';
   }
   if (typeof(obj) === "object") {
     initialRun = false;
@@ -71,6 +59,3 @@ var stringifyJSON = function(obj) {
 //--------------------------------------------------------
   return result;
 };
-
-JSON.stringify()
-stringifyJSON()
